@@ -1,0 +1,103 @@
+{
+  "name": "safepeek",
+  "productName": "SafePeek",
+  "version": "1.1.0",
+  "description": "Know what's inside before you open it.",
+  "main": "dist-electron/main.js",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build:electron && concurrently -k \"vite\" \"wait-on tcp:5173 && cross-env NODE_ENV=development electron .\"",
+    "build:electron": "tsc -p electron/tsconfig.json",
+    "build": "npm run typecheck && npm run build:electron && vite build",
+    "start": "electron .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "package": "npm run build && electron-builder --win --x64",
+    "fixtures": "tsx tests/helpers/buildFixtures.ts",
+    "package:dir": "npm run build && electron-builder --win --x64 --dir",
+    "fixtures:visual": "python3 tests/helpers/make_visual_fixtures.py",
+    "verify:ocr": "node scripts/verify-electron-ocr.js"
+  },
+  "dependencies": {
+    "@tesseract.js-data/eng": "^1.0.0",
+    "@types/yauzl": "^3.4.0",
+    "chokidar": "^3.6.0",
+    "fast-xml-parser": "^4.5.7",
+    "jsqr": "^1.4.0",
+    "pdfjs-dist": "^3.11.174",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "0.33.5",
+    "tesseract.js": "^5.1.1",
+    "yauzl": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^31.3.0",
+    "electron-builder": "^24.13.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vitest": "^2.0.4",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.safepeek.app",
+    "productName": "SafePeek",
+    "copyright": "Copyright \u00a9 2026 SafePeek",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "build/icon.png",
+      "package.json",
+      "!**/*.map",
+      "!**/*.test.*",
+      "!**/tests/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "executableName": "SafePeek"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SafePeek",
+      "uninstallDisplayName": "SafePeek",
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico"
+    },
+    "asarUnpack": [
+      "node_modules/tesseract.js/**",
+      "node_modules/tesseract.js-core/**",
+      "node_modules/@tesseract.js-data/**",
+      "node_modules/pdfjs-dist/legacy/build/pdf.worker.js",
+      "node_modules/sharp/**",
+      "node_modules/@img/**",
+      "node_modules/jsqr/**"
+    ]
+  },
+  "author": "SafePeek",
+  "license": "UNLICENSED"
+}

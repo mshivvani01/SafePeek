@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-electron
+release
+*.log
+.env
+.env.*
+*.pem
+*.pfx
+*.p12
+coverage
+.DS_Store
+Thumbs.db
+

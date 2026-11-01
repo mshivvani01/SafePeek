@@ -1,0 +1,10 @@
+export * from './types';
+export { JsonStore } from './jsonStore';
+export { SecuritySettingsStore, normalizeSecurity, normalizeAi } from './settings';
+export type { QuarantineInput, QuarantineDeps, MoveFn } from './quarantineService';
+export { QuarantineService, sanitizeFileName, resolveInside, safeMove, sha256File, QUARANTINE_SUFFIX } from './quarantineService';
+export { AlertService, alertEligible, notificationAllowed, assessmentFingerprint, assessmentIdOf, SEVERITY_OF } from './alertService';
+export { HistoryService } from './historyService';
+export { decideOpen } from './openSafety';
+export { ProtectionService } from './protectionService';
+export type { SystemActions, ProtectionDeps } from './protectionService';

@@ -1,0 +1,1 @@
+SafePeek test fixture. Harmless text. Copy this file into a monitored folder to test detection.
